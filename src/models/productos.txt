@@ -1,0 +1,1 @@
+[{"title":"Remera","description":"verde","price":1200,"thumbnail":"","code":"456","stock":13,"id":1},{"title":"Remera","description":"azul marino","price":200,"thumbnail":"","code":"457","stock":10,"id":1}]

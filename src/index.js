@@ -1,32 +1,27 @@
-/*const fs = require(`fs`)
+import express from "express";
+import routerProd from './routes/product.js'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
 
-const busqueda = async () => {
+export const __filename = fileURLToPath(import.meta.url)
+export const __dirname = dirname(__filename)
 
-    let consulta = await fs.promises.readFile(`./ejemplo.txt`, ùtf-8 )
-    let aux = JSON.parse(consulta)
 
-    if(aux.some(producto => producto.id === idParametro)) {
-    //existeono
-    } else {
-         console.log("prod no encontrado")
-    }  
-}
-const PORT = 4000
-const http = require(`http`)
-const server = http.createServer((request, response) => {
-    response.end("Hola mundo!!!")
-})
-server.listen(PORT, () =>{
-    console.log(`Server on port ${PORT}`)
-
-})*/
-
-import express from 'express'
-//const express = require('express')
 const app = express()
 const PORT = 4000
+   
+//midd
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+//rutas
+app.use(`/static`, express.static(__dirname + `/public`))
+app.use(`/api/product`, routerProd)
 
-const productos = [
+
+app.listen(PORT, () => {
+    console.log(`server on port ${PORT}`)
+})
+/*const productos = [
     {
         nombre: "remera",
         id:1,
@@ -42,9 +37,8 @@ const productos = [
         id:3,
         categoria: "accesorios"
     },
-]
-app.use(express.urlencoded({extended: true}))
-
+]*/
+/*
 app.get(`/producto/:id`, async (req, res) => {
     console.log(productos.find(prod => prod.id === parseInt(req.params.id)))
     console.log(req.params.id)
@@ -58,8 +52,4 @@ app.get(`/producto`, (req,res) => {
 })
 app.get(`/`, (req,res) => {
     res.send("pagina de inicio")
-})
-app.listen(PORT, () => {
-    console.log(`server on port ${PORT}`)
-
-})
+})*/
