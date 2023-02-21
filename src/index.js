@@ -35,9 +35,24 @@ app.use(`/static`, express.static(__dirname + `/public`))
 app.use(`/api/product`, routerProd)
 
 app.get(`/static`, (req,res) => {
+
+
+    const user ={
+        nombre: "flor",
+        apellido: "paz",
+        email: "a@a.com"
+
+    }
+    const horarios = [
+        {dias:"martes y jueves", hs:"17 a 18"},
+        {dias:"lunes y viernes", hs:"12 a 28"}
+    ]
     res.render("home", {
         titulo: "Back",
-        mensaje: "mundo"
+        mensaje: "mundo",
+        isPaz: user.apellido==="paz",
+        user,
+        horarios
     })
 })
 

@@ -1,4 +1,17 @@
 <div>
     <h1>Hola{{mensaje}}</h1>
     {{> contador}}
+    <p>hola, {{user.nombre}}</p>
+    {{#if isPaz}}
+      {{#each horarios}}
+      <div>
+        <p>{{this.dias}}</p>
+        <p>{{this.hs}}</p>
+       
+      </div>
+      {{/each }}
+    
+    {{else}}
+    <p>no sos paz</p>
+    {{/if}}
 </div>
