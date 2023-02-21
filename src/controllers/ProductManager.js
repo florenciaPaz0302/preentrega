@@ -1,10 +1,10 @@
-import {promises as fs} from 'fs'
+import {promises as fs} from 'fs';
+
 
 export class ProductManager {
     constructor(path) {
         this.path = path
     }
-
     static incrementarID() {
         if(this.idIncrement) {
             this.idIncrement++
@@ -14,9 +14,10 @@ export class ProductManager {
         return this.idIncrement
     }
 
+
     async addProduct(producto) {
         const prods = JSON.parse(await fs.readFile(this.path, 'utf-8'))
-        producto.id = ProductManager.incrementarID()
+        //producto.id = ProductManager.nanoid()
         prods.push(producto)
         await fs.writeFile(this.path, JSON.stringify(prods))
         return "el Producto se creo"
@@ -150,3 +151,11 @@ productos.addProduct("medias rosas", "descripcion medias1", 200, "Imagen10", "pr
     stock: 4,
     id: 2
 })*/
+/*static incrementarID() {
+        if(this.idIncrement) {
+            this.idIncrement++
+        } else {
+            this.idIncrement = 1
+        }
+        return this.idIncrement
+    }*/
