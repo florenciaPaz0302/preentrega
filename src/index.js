@@ -4,6 +4,7 @@ import {__dirname} from './path.js'
 import multer from 'multer'
 import {engine} from 'express-handlebars'
 import * as path from 'path'
+import { Server } from "socket.io";
 
 
 //const upload = multer ({dest:`src/public/img`})sin formato
@@ -20,7 +21,12 @@ const upload = multer({storage: storage})
 
 const app = express()
 const PORT = 4000
-   
+
+const server = app.listen(PORT, () => {
+    console.log(`server on port ${PORT}`)
+})
+const io = new Server(server)
+
 //midd
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -31,10 +37,10 @@ app.set("views", path.resolve(__dirname, "./views"))
 
 
 //rutas
-app.use(`/static`, express.static(__dirname + `/public`))
+app.use(`/`, express.static(__dirname + `/public`))
 app.use(`/api/product`, routerProd)
 
-app.get(`/static`, (req,res) => {
+app.get(`/`, (req,res) => {
 
 
     const user ={
@@ -55,6 +61,19 @@ app.get(`/static`, (req,res) => {
         horarios
     })
 })
+io.on("connection", (socket) => {
+    console.log("Conexion con socket")
+  
+    socket.on('mensaje', info =>{
+      console.log(info)
+    })
+  
+    socket.broadcast.emit('evento-admin', 'Hola desde io admin') 
+  
+    socket.emit('evento-general', "Hola a todos los usuarios")
+  
+  
+  })
 
 app.post(`/upload`,upload.single(`product`), (req,res) => {
     console.log(req.file)
@@ -62,9 +81,8 @@ app.post(`/upload`,upload.single(`product`), (req,res) => {
 })
 
 
-app.listen(PORT, () => {
-    console.log(`server on port ${PORT}`)
-})
+
+
 /*const productos = [
     {
         nombre: "remera",
